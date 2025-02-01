@@ -15,7 +15,19 @@ response = requests.get(completeurl)
 
 data = response.json()
 
-message = "city = " + str(data['name']) + " , temperature = " + str(round(data['main']['temp'] - 273.15, 2)) + " *c" + " , humidity = " + str(data['main']['humidity'])
+weather_condition = data['weather'][0]['main'].lower()
+temperature = round(data['main']['temp'] - 273.15, 2)
+humidity = data['main']['humidity']
+city = data['name']
+
+if "rain" in weather_condition or "thunderstorm" in weather_condition:
+    umbrella_message = "Hey Sahil.. It might rain today. You gotta carry your umbrella ☔"
+else:
+    umbrella_message = "Hey Sahil.. No rain expected today. No need to carry your umbrella 😊"
+
+
+message = f"City = {city}, Temperature = {temperature}°C, Humidity = {humidity}%\n{umbrella_message}"
+
 
 def send_msg():
     url = f"{URL}"
